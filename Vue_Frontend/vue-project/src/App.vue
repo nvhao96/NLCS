@@ -1,11 +1,13 @@
+<template>
+  <router-view></router-view>
+</template>
+
 <script>
+import { RouterLink, RouterView } from 'vue-router';
 export default {
+
 }
 </script>
-
-<template>
-  <h1>Hello, Vue.js!</h1>
-</template>
 
 <style>
 .page {
@@ -13,3 +15,5 @@ export default {
   margin: auto;
 }
 </style>
+
+

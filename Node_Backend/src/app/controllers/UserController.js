@@ -1,58 +1,98 @@
-const User = require('../models/userModel');
+const AdminService = require("../services/admin.service");
+const UserService = require("../services/user.service");
+const MongoDB = require("../utils/mongodb.util");
+const ApiError = require("../api-error");
+const upload = require('./multer');
 
-// Hiển thị form đăng ký
-exports.showRegistrationForm = (req, res) => {
-    res.render('registration');
-};
 
-// Đăng ký người dùng mới
-exports.registerUser = (req, res) => {
-    const { username, password } = req.body;
-    const user = new User({ username, password });
-    user.save((err) => {
-        if (err) {
-            console.error(err);
-            return res.redirect('/register');
+
+exports.getAllUsers = async (req, res, next) => {
+    let documents = [];
+
+    try {
+        const userService = new UserService(MongoDB.client);
+        const { fullname } = req.query;
+        if (fullname) {
+            documents = await userService.findByName(fullname);
         }
-        res.redirect('/users');
-    });
-};
-
-// Hiển thị danh sách người dùng
-exports.getAllUsers = (req, res) => {
-    User.find({}, (err, users) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Internal Server Error');
+        else {
+            documents = await userService.find({});
         }
-        res.render('userList', { users });
-    });
+
+        return res.status(200).json(documents);
+
+    } catch (error) {
+        return next(
+            new ApiError(500, "An error occurred while retrieving contacts")
+        );
+    }
+
 };
 
+exports.getAllAdmins = async (req, res, next) => {
+    let documents = [];
 
-// Hiển thị form đăng nhập
-exports.showLoginForm = (req, res) => {
-    res.render('login');
-};
-
-// Xử lý đăng nhập
-exports.loginUser = (req, res) => {
-    const { username, password } = req.body;
-    User.findOne({ username, password }, (err, user) => {
-        if (err) {
-            console.error(err);
-            return res.redirect('/login');
+    try {
+        const adminService = new AdminService(MongoDB.client);
+        const { fullname } = req.query;
+        if (fullname) {
+            documents = await adminService.findByName(fullname);
         }
-        if (!user) {
-            return res.redirect('/login');
+        else {
+            documents = await adminService.find({});
         }
-        // Lưu thông tin người dùng đã đăng nhập vào session
-        req.session.user = user;
-        res.redirect('/dashboard');
-    });
+
+        return res.status(200).json(documents);
+
+    } catch (error) {
+        return next(
+            new ApiError(500, "An error occurred while retrieving contacts")
+        );
+    }
+
 };
-// Đăng xuất
-exports.logoutUser = (req, res) => {
-    req.session.destroy();
-    res.redirect('/login');
+
+exports.updateUser = [upload.none(), async (req, res, next) => {
+    console.log("update", req.body);
+    if (Object.keys(req.body).length == 0) {
+        return next(new ApiError(400, "Dữ liệu cập nhật không được để trống"));
+    }
+
+    try {
+        const userService = new UserService(MongoDB.client);
+        // khi thuc thi lenh thu 2 document thi du lieu da duoc update
+
+        const document = await userService.update(req.params.id, req.body);
+
+        if (!document) {
+            return next(new ApiError(404, "Không tìm thấy người dùng"));
+        }
+        return res.json({ status: 200, message: "Cập nhật thông tin người dùng thành công!" });
+
+    } catch (error) {
+        return next(
+            new ApiError(500, `Lỗi cập nhật người dùng với id=${req.params.id}`)
+        );
+    }
+}
+];
+
+exports.findOneUser = async (req, res, next) => {
+    try {
+        const userService = new UserService(MongoDB.client);
+        const document = await userService.findById(req.params.id);
+        if (!document) {
+            return next(new ApiError(404, "Không tìm thấy người dùng"));
+        }
+
+        return res.status(200).json(document);
+
+    } catch (error) {
+        return next(
+            new ApiError(
+                500,
+                `Lỗi khi lấy người dùng với id=${req.params.id}`
+            )
+        );
+    }
 };

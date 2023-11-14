@@ -1,16 +1,20 @@
-const userRoute = require('./userRoute');
-const categoryRoute = require('./categoryRoute');
-const productRoute = require('./productRoutes');
-const cartRoute = require('./cartRoute');
-const orderRoute = require('./orderRoute');
+const notesRouter = require('./notes.route');
+const ordersRouter = require('./order.route');
+const cartsRouter = require('./cart.route');
+const categorysRouter = require('./category.route');
+const productsRouter = require('./product.route');
+const usersRouter = require('./user.route');
+const loginRouter = require('./login.route');
+const registerRouter = require('./register.route');
 
 function route(app) {
-    app.use('/register', userRoute);
-    app.use('/login', userRoute);
-    app.use('/category', categoryRoute);
-    app.use('/product', productRoute);
-    app.use('/cart', cartRoute);
-    app.use('/order', orderRoute);
+    app.use('/api/users', usersRouter);
+    app.use('/api/login', loginRouter);
+    app.use('/api/register', registerRouter);
+    app.use('/api/products', productsRouter);
+    app.use('/api/categorys', categorysRouter);
+    app.use('/api/carts', cartsRouter);
+    app.use('/api/orders', ordersRouter);
 
 }
 

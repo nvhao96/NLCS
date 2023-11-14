@@ -1,131 +1,189 @@
-// const cartService = require("../services/cartService");
-// const MongoDB = require("../utils/mongodb.util");
-
-// // Thêm sản phẩm vào giỏ hàng
-// class cartController{
-//     async addToCart = (req, res) {
-//         try {
-//             const { userId, productId, quantity } = req.body;
-//             const cartItem = await cartService.addToCart(userId, productId, quantity);
-//             res.json(cartItem);
-//         } catch (error) {
-//             res.status(500).json({ error: 'Lỗi khi thêm sản phẩm vào giỏ hàng' });
-//         }
-//     };
+const CartService = require("../services/cart.service");
+const ProductService = require("../services/product.service");
+const ImageService = require("../services/image.service");
+const UserService = require("../services/user.service");
+const MongoDB = require("../utils/mongodb.util");
+const ApiError = require("../api-error");
+const { ObjectId } = require("mongodb");
+const upload = require('./multer');
 
 
-//     // Xóa sản phẩm khỏi giỏ hàng
-//     async removeFromCart =  (req, res)  {
-//         try {
-//             const { userId, productId } = req.params;
-//             const result = await cartService.removeFromCart(userId, productId);
-//             res.json({ message: 'Xóa sản phẩm thành công' });
-//         } catch (error) {
-//             res.status(500).json({ error: 'Lỗi khi xóa sản phẩm khỏi giỏ hàng' });
-//         }
-//     };
-
-//     // Tăng số lượng sản phẩm trong giỏ hàng
-//     const increaseQuantity = async (req, res) => {
-//         const { userId, productId, quantity } = req.body;
-//         try {
-//             const cartItem = await cartService.increaseQuantity(userId, productId, quantity);
-//             res.json(cartItem);
-//         } catch (error) {
-//             res.status(500).json({ error: 'Lỗi khi tăng số lượng sản phẩm trong giỏ hàng' });
-//         }
-//     };
-
-//     // Giảm số lượng sản phẩm trong giỏ hàng
-//     const decreaseQuantity = async (req, res) => {
-//         const { userId, productId, quantity } = req.body;
-//         try {
-//             const cartItem = await cartService.decreaseQuantity(userId, productId, quantity);
-//             res.json(cartItem);
-//         } catch (error) {
-//             res.status(500).json({ error: 'Lỗi khi giảm số lượng sản phẩm trong giỏ hàng' });
-//         }
-//     };
-// };
-
-
-// module.exports = {
-//     addToCart,
-//     removeFromCart,
-//     increaseQuantity,
-//     decreaseQuantity,
-// };
-
-
-
-
-
-
-
-const Cart = require('../services/cartService');
-
-// Get cart by user ID
-exports.getCartByUserId = async (req, res) => {
+exports.addToCart = [upload.none(), async (req, res, next) => {
     try {
-        const userId = req.params.userId;
-        const cart = await Cart.findOne({ userId }).populate('items.productId');
-        res.json(cart);
-    } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
-    }
-};
+        const { productId, quantity, userId } = req.body;
 
-// Add item to cart
-exports.addItemToCart = async (req, res) => {
-    try {
-        const { userId, productId, quantity } = req.body;
+        const cartService = new CartService(MongoDB.client);
 
-        let cart = await Cart.findOne({ userId });
+        // Kiểm tra nếu sản phẩm đã tồn tại trong giỏ hàng của người dùng
+        const existingCartItem = await cartService.getCartItem(userId, productId);
+        if (existingCartItem && existingCartItem.length > 0) {
+            console.log("san pham ton tai");
+            // Sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng lên
+            const existingQuantity = parseInt(existingCartItem[0].quantity);
+            const updatedQuantity = existingQuantity + parseInt(quantity);
+            await cartService.updateCartItemQuantity(userId, productId, updatedQuantity);
 
-        if (!cart) {
-            cart = new Cart({ userId, items: [] });
-        }
-
-        const existingItemIndex = cart.items.findIndex(
-            (item) => item.productId.toString() === productId
-        );
-
-        if (existingItemIndex !== -1) {
-            // Item already exists in the cart, update the quantity
-            cart.items[existingItemIndex].quantity += quantity;
+            return res.send({ status: 200, message: "Thêm sản phẩm mới và cập nhật số lượng" });
         } else {
-            // Item doesn't exist in the cart, add it
-            cart.items.push({ productId, quantity });
+            console.log("san pham moi");
+            // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới vào
+            const newCartItem = {
+                productId: productId,
+                quantity: quantity,
+                userId: userId
+            };
+            const result = await cartService.addToCart(newCartItem); // Gọi lại phương thức addToCart
+            if (result) {
+                return res.send({ status: 200, message: "Thêm sản phẩm mới thành công" });
+            }
         }
 
-        await cart.save();
-
-        res.json(cart);
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        return next(
+            new ApiError(500, "Đã xảy ra lỗi khi thêm vào giỏ hàng")
+        );
+    }
+}];
+
+exports.getCart = async (req, res, next) => {
+
+    try {
+        let documents = [];
+        const userId = req.params.userId;
+        const cartService = new CartService(MongoDB.client);
+        documents = await cartService.find(userId);
+        if (!documents) {
+            return next(new ApiError(404, "Không tìm thấy người dùng"));
+        } else {
+            const productIds = [];
+            const cartItems = [];
+
+            // Lấy danh sách các productId từ giỏ hàng và tạo danh sách cartItems
+            for (const item of documents) {
+                productIds.push(item.productId);
+                const productService = new ProductService(MongoDB.client);
+                const product = await productService.findById(item.productId);
+                const imageService = new ImageService(MongoDB.client);
+                const images = await imageService.findByMSHH(item.productId);
+                const productImages = images;
+
+                cartItems.push({
+                    productId: item.productId,
+                    productname: product.productname,
+                    price: product.price,
+                    category: product.category,
+                    images: productImages,
+                    quantity: item.quantity
+                });
+            }
+
+            documents = cartItems;
+            // console.log("document", documents);
+
+            return res.send(documents);
+        }
+    } catch (error) {
+        return next(
+            new ApiError(
+                500,
+                `Lỗi khi lấy giỏ hàng của người dùng với id=${req.params.id}`
+            )
+        );
+    }
+
+
+};
+
+
+exports.deleteCart = async (req, res, next) => {
+
+    try {
+
+        const { userId, productId } = req.params;
+
+        const cartService = new CartService(MongoDB.client);
+
+        // Kiểm tra nếu sản phẩm có tồn tại trong giỏ hàng của người dùng
+        const existingCartItem = await cartService.getCartItem(userId, productId);
+
+
+        if (!existingCartItem) {
+            throw new Error('Sản phẩm không tồn tại trong giỏ hàng');
+        } else {
+
+            const result = await cartService.delete(userId, productId); // Gọi lại phương thức addToCart
+            if (result) {
+                return res.send({ status: 200, message: "Xóa sản phẩm ra khỏi giỏ hàng thành công" });
+            }
+        }
+
+    } catch (error) {
+        return next(
+            new ApiError(500, "Đã xảy ra lỗi khi xóa sản phẩm trong giỏ hàng")
+        );
     }
 };
 
-// Remove item from cart
-exports.removeItemFromCart = async (req, res) => {
+exports.updateCart = [upload.none(), async (req, res, next) => {
+    console.log("data", req.body.data);
+    console.log("userId", req.params.productId);
+    console.log("userId", req.params.userId);
+
     try {
-        const { userId, itemId } = req.body;
+        const productId = req.params.productId;
 
-        const cart = await Cart.findOne({ userId });
+        const userId = req.params.userId;
 
-        if (!cart) {
-            return res.status(404).json({ error: 'Cart not found' });
+        // const { userId, productId } = req.params;
+        const quantity = parseInt(req.body.data);
+        console.log("quantity", quantity);
+        console.log("userId", userId);
+
+        const cartService = new CartService(MongoDB.client);
+
+        // Kiểm tra nếu sản phẩm có tồn tại trong giỏ hàng của người dùng
+
+
+        const result = await cartService.updateCartItemQuantity(userId, productId, quantity); // Gọi lại phương thức addToCart
+        if (result) {
+            return res.send({ status: 200, message: "Cập nhật thành công" });
         }
 
-        const updatedItems = cart.items.filter(
-            (item) => item._id.toString() !== itemId
-        );
 
-        cart.items = updatedItems;
-        await cart.save();
 
-        res.json(cart);
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        return next(
+            new ApiError(500, "Đã xảy ra lỗi khi cập nhật sản phẩm trong giỏ hàng")
+        );
+    }
+}];
+
+
+exports.deleteAllCart = async (req, res, next) => {
+    try {
+
+        const { userId } = req.params;
+        console.log("userId", userId);
+
+        const cartService = new CartService(MongoDB.client);
+
+        // Kiểm tra nếu sản phẩm có tồn tại trong giỏ hàng của người dùng
+        const existingCartItem = await cartService.getCartUser(userId);
+
+
+        if (!existingCartItem) {
+            throw new Error('Sản phẩm không tồn tại trong giỏ hàng');
+        } else {
+
+            const result = await cartService.deleteAll(userId); // Gọi lại phương thức addToCart
+            if (result) {
+                return res.send({ status: 200, message: "Xóa sản phẩm ra khỏi giỏ hàng thành công" });
+            }
+        }
+
+    } catch (error) {
+        return next(
+            new ApiError(500, "Đã xảy ra lỗi khi xóa sản phẩm trong giỏ hàng")
+        );
     }
 };

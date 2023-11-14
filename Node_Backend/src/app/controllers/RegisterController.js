@@ -1,65 +1,60 @@
-const UserService = require("../services/userService");
-const User = require("../models/useModel");
+
+const UserService = require("../services/user.service");
+const AdminService = require("../services/admin.service");
+const MongoDB = require("../utils/mongodb.util");
 const ApiError = require("../api-error");
-const bcrypt = require("bcrypt");
-const MongoDB = require("../utils/mongodb");
 
 
-class RegisterController {
-    createon(req, res) {
-        res.send('register');
+exports.register = async (req, res, next) => {
+
+    const userService = new UserService(MongoDB.client);
+    const emailExits = await userService.findByEmail(req.body.email);
+    if (emailExits) {
+        return next(new ApiError(400, "Email đã tồn tại!"));
     }
-    async create(req, res, next) {
-        var message = "";
 
+    try {
+
+        const document = await userService.create(req.body);
+
+        return res.status(200).send({ message: "Dang ki thanh cong" })
+
+    } catch (error) {
+        return next(
+            new ApiError(500, "Đã xảy ra lỗi trong quá trình đăng ký tài khoản")
+        )
+    }
+
+};
+
+
+exports.registerAdmin = async (req, res, next) => {
+
+    const adminService = new AdminService(MongoDB.client);
+    const emailExits = await adminService.findByEmail(req.body.email);
+    if (emailExits) {
+        return next(new ApiError(400, "Email đã tồn tại!"));
+    } else {
         try {
-            const salt = await bcrypt.genSalt(10);
-            const hashed = await bcrypt.hash(req.body.password, salt);
 
-            const newUser = new User({
-                name: req.body.name,
-                phone: req.body.phone,
-                password: hashed,
-            });
+            const document = await adminService.create(req.body);
 
-            if (!newUser.name || newUser.name.trim() === "") {
-                message = "Dien ten dang nhap";
-                res.send(message);
-                return;
-            }
-            if (!newUser.phone || newUser.phone.trim() === "") {
-                message = "Dien so dien thoai";
-                res.send(message)
-                return;
-            } else if (!/^\d{10}$/.test(newUser.phone)) {
-                message = "So dien thoai gom 10 so";
-                res.send(message)
-                return;
+            if (document) {
+                return res.send({ status: 200, message: "Đăng ký thành công" });
             }
 
-            const userService = new UserService(MongoDB.client);
-
-            const userExists = await userService.findByPhone(newUser.phone);
-
-            if (userExists) {
-                message = "Tai khoan da ton tai";
-                res.send(message);
-                return;
-            } else {
-                const document = await userService.create(newUser);
-                message = "Dang ky thanh cong";
-                res.send(message);
-                console.log(document);
-            }
-            res.send(message);
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
             return next(
-                new ApiError(500, "An error occurred while creating")
+                new ApiError(500, "Xảy ra lỗi trong quá trình tạo tài khoản")
             )
         }
     }
 }
 
-//tạo ra một đối tượng và gửi ra ngoài
-module.exports = new RegisterController();
+
+
+
+
+
+
+
