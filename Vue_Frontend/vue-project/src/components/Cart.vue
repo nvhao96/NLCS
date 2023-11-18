@@ -37,7 +37,7 @@
                 <tr v-for="(item, index) in cartItems" :key="item.id">
                     <!-- <td><input class="checkbox" type="checkbox" :value="item.id" v-model="item.selected"></td> -->
                     <td></td>
-                    <td><img :key="image" :src="`http://localhost:3000/images/${item.images}`" :alt="item.productname"
+                    <td><img :src="`http://localhost:3000/images/${item.images}`" :alt="item.productname"
                             class="product-image"></td>
                     <td>{{ item.productname }}</td>
                     <td>{{ parseInt(item.price.replace(/\s/g, '')).toLocaleString('vi-VN') }}</td>
@@ -45,13 +45,14 @@
 
                         <div class="d-flex text-center">
 
-                            <button class=" button-quantity" @click="decreaseQuantity(item)">-</button>
+                            <button class=" button-quantity wd" @click="decreaseQuantity(item)">-</button>
                             <button class=" button-quantity-number"> {{ item.quantity }}</button>
                             <button class=" button-quantity" @click="increaseQuantity(item)">+</button>
                         </div>
                     </td>
                     <td>{{ subtotalPrice[index] }}</td>
-                    <td><button class="btn btn-danger" @click="deleteCart(item)"><i class="bi bi-trash3-fill"></i></button>
+                    <td><button class="btn btn-outline-danger" @click="deleteCart(item)"><i
+                                class="bi bi-trash3-fill"></i></button>
                     </td>
                 </tr>
                 <tr>
@@ -70,8 +71,9 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><router-link :to="{ name: 'Checkout', params: { id: userId } }"><button class="btn btn-danger"
-                                @click="handleCheckout">Thanh Toán</button></router-link></td>
+                    <td><router-link :to="{ name: 'Checkout', params: { id: userId } }"><button
+                                class="btn btn-outline-success" @click="handleCheckout">Thanh Toán</button></router-link>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -168,7 +170,7 @@ export default {
             // console.log("item.productId", item.productId);
             const response = await CartService.updateCart(userId, item.productId, item.quantity);
             if (response.status === 200) {
-                alert("Cập nhật thành công");
+                // alert("Cập nhật thành công");
                 this.getCart();
             }
 
@@ -185,7 +187,7 @@ export default {
                 console.log("item.productId", item.productId);
                 const response = await CartService.updateCart(userId, item.productId, item.quantity);
                 if (response.status === 200) {
-                    alert("Cập nhật thành công");
+                    // alert("Cập nhật thành công");
                     this.getCart();
                 }
             }
@@ -229,40 +231,6 @@ export default {
 
 
 
-        // checkCart(){
-        //     if(this.cartItems.length)
-        // }
-
-        // saveSelectedItems(item) {
-        //     if (!this.selectedItems.includes(item)) {
-        //         this.selectedItems.push(item);
-
-        //     }
-        // },
-        // removeSelectedItems(item) {
-        //     const index = this.selectedItems.indexOf(item);
-        //     if (index !== -1) {
-        //         this.selectedItems.splice(index, 1);
-        //     }
-        // },
-        // selectAllItems() {
-        //     if (this.select_all) {
-        //         this.selectedItems = this.cartItems.map(item => item);
-        //     } else {
-        //         this.selectedItems = [];
-        //     }
-        // },
-
-
-        // handleCheckout() {
-
-
-        //     this.checkSelectedItems();
-        // },
-        // checkSelectedItems() {
-        //     this.selectedItems = this.cartItems.filter(item => item.selected);
-        //     console.log("Các mục đã chọn:", this.selectedItems);
-        // }
 
 
     },
@@ -313,6 +281,10 @@ export default {
     width: 20px;
 }
 
+.d-flex {
+    position: absolute;
+    right: 32rem;
+}
 
 .image-nocart {
     width: 250px;
@@ -323,5 +295,9 @@ export default {
 
 .card-nocart {
     padding: 20px;
+}
+
+.wd {
+    padding: 0 8px;
 }
 </style>

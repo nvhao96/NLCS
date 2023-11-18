@@ -124,6 +124,30 @@ footer {
     /* Tạo khoảng cách giữa các mục */
 }
 
+.bi-facebook {
+    color: white;
+    background-color: #f38619;
+    border-radius: 5px;
+}
+
+.bi-twitter {
+    color: white;
+    background-color: #f38619;
+    border-radius: 5px;
+}
+
+.bi-google {
+    color: white;
+    background-color: #f38619;
+    border-radius: 5px;
+}
+
+.bi-instagram {
+    color: white;
+    background-color: #f38619;
+    border-radius: 5px;
+}
+
 .title-footer,
 .title-footer {
     color: white;
@@ -132,7 +156,7 @@ footer {
 
 .icon-info li i,
 .text-footer {
-    color: rgb(67, 67, 67);
+    color: white;
 }
 
 .hr-footer {
@@ -150,7 +174,7 @@ footer {
 }
 
 .icon-footer li i {
-    color: rgb(67, 67, 67);
+    /* color: rgb(67, 67, 67); */
     padding: 13px;
     width: 55px;
     height: 55px;

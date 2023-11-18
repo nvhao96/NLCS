@@ -110,6 +110,10 @@ export default {
             else if (this.password === '') {
                 this.Error = 'Vui lòng nhập mật khẩu!';
                 this.showError = true;
+            }
+            else if (this.password.length < 8) {
+                this.Error = 'Mật khẩu phải trên 8 kí tự!';
+                this.showError = true;
             } else if (this.address === '') {
                 this.Error = 'Vui lòng nhập địa chỉ!';
                 this.showError = true;
@@ -194,7 +198,7 @@ export default {
 }
 
 .container button {
-    background-color: #04AA6D;
+    background-color: #326e51;
 
     color: #fff;
     font-size: 12px;
@@ -348,7 +352,7 @@ h6 {
 .error-message {
     color: red;
     margin-top: 30px;
-    margin-left: 350px;
+    margin-left: 440px;
     width: fit-content;
 }
 

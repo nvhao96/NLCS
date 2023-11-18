@@ -138,8 +138,8 @@ export default {
 
 <style scoped>
 .user {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
 
 }
 
@@ -150,6 +150,7 @@ export default {
 h3,
 .title-product {
     font-weight: bold;
+    margin-top: 15px;
 }
 
 .btn {

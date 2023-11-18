@@ -13,8 +13,8 @@ router.route('/:id')
 router.route('/category/:categoryname/:product')
     .get(products.findProductByCategory);
 
-// router.route('/search')
-//     .post(products.searchProduct);
+router.route('/search')
+    .post(products.searchProduct);
 
 
 

@@ -1,37 +1,29 @@
 <template>
     <div class="container">
         <div class="row product">
-
             <h3>Chi tiết sản phẩm</h3>
             <div class="col-md-5 text-center">
                 <div class="card">
-                    <img :key="image" :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
+                    <img :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
                         class="product-image">
                 </div>
 
             </div>
             <div class="col-md-7">
                 <h2>{{ product.productname }}</h2>
-
                 <p>{{ product.describe }}</p>
-
                 <p class="text-price">{{ Price }}&#8363;</p>
-
                 <div class="d-flex">
                     <p class="mt-3">Số lượng:</p>
                     <button class=" button-quantity" @click="decreaseQuantity">-</button>
                     <button class=" button-quantity-number"> {{ quantity }}</button>
                     <button class=" button-quantity" @click="increaseQuantity">+</button>
                 </div>
-
-
-
-                <button class="price btn btn-danger mt-3" @click="addToCartQuantity(product, quantity)">THÊM VÀO GIỎ
+                <button class="price btn btn-success mt-5" @click="addToCartQuantity(product, quantity)">THÊM VÀO GIỎ
                     HÀNG</button>
             </div>
         </div>
     </div>
-
 
 
     <!-- Lay cac san pham cung danh muc (cac san pham tuong tu)-->
@@ -39,26 +31,19 @@
     <div class="container ">
         <div class="row card-product product-same">
             <h4 class="text-center mt-4">CÁC SẢN PHẨM TƯƠNG TỰ</h4>
-
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row d-flex">
                         <div class="card col-sm-4" v-for="item in items" :key="item._id">
-                            <img :key="image" :src="`http://localhost:3000/images/${item.images}`" :alt="item.productname"
+                            <img :src="`http://localhost:3000/images/${item.images}`" :alt="item.productname"
                                 class="item-image mx-auto">
                             <div class="card-body text-center">
                                 <p class="card-name">{{ item.productname }}</p>
-                                <p class="card-price">{{ item.price.replace(/\s/g, '.') }}&#8363;
-                                </p>
+                                <p class="card-price">{{ item.price.replace(/\s/g, '.') }}&#8363;</p>
 
                                 <div class="icon-hover d-flex">
-                                    <div class="icon-eye" @click="viewProduct">
-                                        <router-link :to="{ name: 'DetailProduct', params: { id: item._id } }"
-                                            class="nav-link">
-                                            <i class="bi bi-eye"></i>
-                                        </router-link>
-
-
+                                    <div class="icon-eye" @click="viewProduct(item._id)">
+                                        <i class="bi bi-eye"></i>
                                     </div>
                                     <div class="icon-cart" @click="addToCart(item)">
                                         <i class="bi bi-cart"></i>
@@ -66,18 +51,8 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
                     </div>
-
-
-
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -103,7 +78,11 @@ export default {
     },
 
     mounted() {
-        this.fetchfindOneProduct();
+        // this.fetchfindOneProduct();
+
+        const productQuery = this.$route.params.id;
+        this.fetchfindOneProduct(productQuery);
+
     },
 
     computed: {
@@ -120,12 +99,16 @@ export default {
     },
 
     methods: {
+        viewProduct(productId) {
+            this.$router.push({ name: 'DetailProduct', params: { id: productId } });
+            this.fetchfindOneProduct(productId);
+        },
 
-        async fetchfindOneProduct() {
+        async fetchfindOneProduct(productQuery) {
             try {
-                const productId = this.$route.params.id;
 
-                this.product = await ProductService.findOneProduct(productId);
+
+                this.product = await ProductService.findOneProduct(productQuery);
 
                 this.Price = this.product.price.replace(/\s/g, '.');
 
@@ -228,18 +211,12 @@ export default {
                             productId: product._id,
                             quantity: quantity
                         };
-
                         const response = await CartService.addToCart(data);
                         if (response.status === 200) {
                             alert("Thêm sản phẩm vào giỏ hàng thành công");
-
-
-
-
                             const dataquantity = {
                                 Quantity: updatedQuantity,
                             }
-
                             // Cập nhật giá trị Quantity mới vào cơ sở dữ liệu
                             const result = await ProductService.updateProduct(product._id, dataquantity);
                             if (result.status === 200) {
@@ -252,8 +229,6 @@ export default {
                 } else {
                     alert("Số lượng bạn mua vượt quá số lượng có trong kho");
                 }
-
-
             } else {
                 this.$router.push('/login');
             }
@@ -264,8 +239,25 @@ export default {
 </script>
 
 <style scoped>
+.card .product-image {
+    height: 379px;
+
+}
+
+.button-quantity-number {
+    height: 30px;
+    width: 30px;
+    margin-top: 15px;
+}
+
+.button-quantity {
+    height: 30px;
+    width: 30px;
+    margin-top: 15px;
+}
+
 .text-price {
-    color: darkorange;
+    color: #FF8E4D;
     font-weight: 700;
 }
 
@@ -301,14 +293,12 @@ export default {
 
 .icon-eye,
 .icon-cart {
-    background-color: #ff0000;
+    background-color: #FF8E4D;
     color: white;
     font-size: 16px;
-    /* padding: 16px 32px; */
-    padding: 4px 15px;
-    margin-left: 5px;
+    padding: 4px 10px;
+    margin-left: 10px;
     border-radius: 50%;
-
 }
 
 .icon {
@@ -330,7 +320,7 @@ export default {
 }
 
 .card-price {
-    color: red;
+    color: #FF8E4D;
 }
 
 

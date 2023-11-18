@@ -113,13 +113,13 @@ export default {
             }
         },
 
-        // async fetchgetNameCategorys() {
-        //     try {
-        //         this.categorys = await CategoryService.getNameCategorys();
-        //     } catch (error) {
-        //         console.error(error);
-        //     }
-        // },
+        async fetchgetNameCategorys() {
+            try {
+                this.categorys = await CategoryService.getNameCategorys();
+            } catch (error) {
+                console.error(error);
+            }
+        },
 
         async ferchListCategory() {
             try {

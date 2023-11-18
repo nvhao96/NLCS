@@ -7,7 +7,7 @@
                 <div class="row  search-result">
                     <div class="card col-lg-3 col-md-6 col-sm-12" v-for="result in searchResults" :key="result.id">
 
-                        <img :key="image" :src="`http://localhost:3000/images/${result.images}`" :alt="result.productname"
+                        <img :src="`http://localhost:3000/images/${result.images}`" :alt="result.productname"
                             class="product-image">
                         <div class="product card-body text-center">
                             <p class="card-name">{{ result.productname }}</p>
@@ -31,12 +31,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
-
-
-
     </div>
 
     <div v-else class="container card-notfound">
@@ -122,7 +117,7 @@ export default {
     font-size: 20px;
     color: white;
     text-align: center;
-    background-color: orange;
+    background-color: #f38619;
 
 
 
@@ -178,7 +173,7 @@ li p:hover {
 
 .icon-eye,
 .icon-cart {
-    background-color: #ff0000;
+    background-color: #f38619;
     color: white;
     font-size: 16px;
     /* padding: 16px 32px; */
@@ -208,7 +203,7 @@ li p:hover {
 }
 
 .card-price {
-    color: red;
+    color: #f38619;
 }
 
 .card-notfound {

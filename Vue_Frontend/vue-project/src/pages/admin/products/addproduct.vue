@@ -85,7 +85,7 @@ import CategoryService from '../../../services/category.service';
 
 export default {
 
-    name: 'admin-addproduct',
+    name: 'admin-addproducts',
 
     data() {
         return {
@@ -104,7 +104,7 @@ export default {
     },
 
     mounted() {
-        // this.fetchgetNameCategorys()
+        this.fetchgetNameCategorys()
     },
 
 
@@ -172,6 +172,16 @@ export default {
                 this.categories = await CategoryService.getNameCategorys();
             } catch (error) {
                 console.error(error);
+            }
+        },
+
+
+
+        async ferchListProduct() {
+            try {
+                this.products = await ProductService.findAll();
+            } catch (error) {
+                console.log(error)
             }
         },
 

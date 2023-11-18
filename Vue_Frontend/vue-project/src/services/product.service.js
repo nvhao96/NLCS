@@ -5,9 +5,13 @@ class ProductService {
         this.api = createApiClient(baseUrl);
     }
 
-    // async create(data) {
-    //     return (await this.api.post("/", data)).data;
-    // }
+    async create(data) {
+        return (await this.api.post("/", data)).data;
+    }
+
+    async findAll() {
+        return (await this.api.get()).data;
+    }
 
     async getAllProducts() {
         return (await this.api.get('/')).data;
@@ -31,7 +35,7 @@ class ProductService {
     }
 
     async searchProduct(formData) {
-        return (await this.api.post(`/search`, formData)).data;
+        return (await this.api.post('/search', formData)).data;
     }
 }
 

@@ -26,7 +26,7 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-right">
-                    <h1>Hello, Friend!</h1>
+                    <h1 class="color">ADMIN</h1>
                 </div>
             </div>
         </div>
@@ -145,6 +145,12 @@ export default {
     cursor: pointer;
 }
 
+.color {
+    position: absolute;
+    right: 120px;
+    top: 85px;
+}
+
 .container {
     background-color: #fff;
     border-radius: 30px;
@@ -165,8 +171,7 @@ export default {
 }
 
 .container button {
-    background-color: #04AA6D;
-
+    background-color: #326e51;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -217,8 +222,6 @@ export default {
     z-index: 2;
 }
 
-
-
 .toggle-container {
     position: absolute;
     top: 0;
@@ -227,19 +230,23 @@ export default {
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
+    border-radius: 30px 0 0 30px;
     z-index: 1000;
+    font-family: Arial, Helvetica, sans-serif;
 }
+
+
 
 .toggle {
 
-    height: 100%;
-    background-image: url("/img/tủ.png");
+    background-image: url("/img/admin.jpg");
+    /* background-repeat: no-repeat; */
+    background-size: 100%;
     color: #fff;
     position: relative;
-    left: -100%;
     height: 100%;
-    width: 200%;
+    width: 100%;
+    text-align: center;
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
 }
@@ -276,7 +283,7 @@ h6 {
 }
 
 .register-here {
-    color: #04AA6D;
+    color: #326e51;
     text-decoration: underline;
 }
 
@@ -303,6 +310,6 @@ h6 {
 }
 
 .input-field:focus {
-    border: 2px solid #04AA6D;
+    border: 2px solid #326e51;
 }
 </style>

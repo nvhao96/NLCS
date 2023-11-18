@@ -10,7 +10,6 @@
             <div class="col-30">
                 <div class="container">
                     <form>
-
                         <div class="row">
                             <div class="col-50">
                                 <h4>Thông tin mua hàng</h4>
@@ -23,9 +22,7 @@
                                 <input type="text" id="adr" name="address" v-model="address">
                                 <label for="city"><i class="fa fa-institution"></i> Số điện thoại</label>
                                 <input type="text" id="city" name="city" v-model="phone">
-
                             </div>
-
                         </div>
                     </form>
 
@@ -184,21 +181,7 @@ export default {
         onMounted(getCart);
 
 
-        // const selectedItemsUpdated = (items) => {
-        //     selectedItems.value = items;
-        // };
 
-        // onMounted(() => {
-        //     eventBus.$on('selectedItemsUpdated', selectedItemsUpdated);
-        // });
-
-        // onUnmounted(() => {
-        //     eventBus.$off('selectedItemsUpdated', selectedItemsUpdated);
-        // });
-
-
-
-        // ...
 
         const totalPrice = computed(() => {
             const calculatedTotalPrice = cartItems.value.reduce((total, item) => {
@@ -398,7 +381,7 @@ label {
 }
 
 .btn {
-    background-color: #04AA6D;
+    background-color: #326e51;
     color: white;
     padding: 12px;
     margin: 10px 0;
@@ -410,7 +393,7 @@ label {
 }
 
 .btn:hover {
-    background-color: #45a049;
+    background-color: #326e51;
 }
 
 a {
@@ -443,7 +426,7 @@ span.price {
 }
 
 .btn-discount {
-    background-color: #04AA6D;
+    background-color: #326e51;
     color: white;
     padding: 12px;
     border: none;
@@ -454,6 +437,6 @@ span.price {
 }
 
 .btn-discount:hover {
-    background-color: #45a049;
+    background-color: #326e51;
 }
 </style>

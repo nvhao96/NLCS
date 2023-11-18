@@ -1,8 +1,7 @@
 <template>
     <section class="about">
         <div class="banner-about">
-            <img class="img-fuild" src="/img/about-6.png" alt="Cinque Terre">
-            <div class="center">GIỚI THIỆU</div>
+            <img class="img-fuild" src="/img/about3.jpg" alt="Cinque Terre">
         </div>
     </section>
 
@@ -15,7 +14,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <img src="/img/about-2.png" class="about-image" alt="">
+                        <img src="/img/about2.jpg" class="about-image" alt="">
                     </div>
                 </div>
 
@@ -55,7 +54,7 @@
 
                     <div class="col-md-6">
                         <div class="card">
-                            <img src="/img/about-3.png" class="about-image" alt="">
+                            <img src="/img/about.jpg" class="about-image" alt="">
                         </div>
                     </div>
                 </div>
@@ -67,18 +66,21 @@
 
         <div class="container">
             <div class="row about-content-three">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <img src="/img/about-noithat.png" class="img-fluid">
+                <div>
+                    <h3>Một số hình ảnh về của hàng</h3>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
-                    <img src="/img/about-noithat-2.png" class="img-fluid">
+                    <img src="/img/about4.jpg" class="img-fluid">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <img src="/img/about5.jpg" class="img-fluid">
                 </div>
             </div>
         </div>
 
-        <div class="banner-about">
-            <img src="/img/about-11.png" alt="Cinque Terre">
-        </div>
+        <!-- <div class="banner-about">
+            <img src="/img/about3.jpg" alt="Cinque Terre">
+        </div> -->
     </section>
 </template>
 
@@ -104,12 +106,14 @@ export default {
     font-size: 40px;
     color: white;
     font-weight: bolder;
+    text-align: center;
 }
 
 
 .banner-about img {
     width: 100%;
-    height: 500px;
+    padding: 20px;
+    height: 175px;
 }
 
 /* .test {
@@ -131,4 +135,12 @@ export default {
 
 .about-content-three {
     margin-top: 20px;
-}</style>
+    text-align: center;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    width: 660px;
+}
+</style>

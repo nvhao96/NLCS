@@ -142,7 +142,7 @@ export default defineComponent({
 }
 
 .bg {
-    background-color: #04AA6D;
+    background-color: #326e51;
 }
 
 
@@ -181,7 +181,7 @@ export default defineComponent({
 
 
 .nav-content li .nav-link:hover {
-    color: #04AA6D;
+    color: #326e51;
 }
 
 .nav-content li .nav-link::after,
@@ -189,7 +189,7 @@ export default defineComponent({
     content: '';
     width: 0;
     height: 3px;
-    background-color: #04AA6D;
+    background-color: #326e51;
     margin: auto;
     display: block;
 }

@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const MongoDB = require('./app/utils/mongodb.util');
 const route = require('./routes');
 const ApiError = require("./app/api-error.js")
+const path = require('path')
 
 
 
@@ -30,8 +31,10 @@ startServer();
 app.use(cors());
 app.use(express.json());
 app.use(morgan('combined'));
+app.use(express.static(path.join(__dirname, '/public')))
 
 route(app)
+
 
 app.use((req, res, next) => {
   // code sẽ chạy khi không có route được định nghĩa nào khớp với yêu câu. Gọi next() để chuyển sang middleware xử lý lỗi

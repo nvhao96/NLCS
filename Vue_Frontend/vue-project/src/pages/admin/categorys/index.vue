@@ -16,10 +16,11 @@
                 </thead>
                 <tbody>
                     <tr v-for="(category, index) in categorys" :key="category.id">
+                        {{ console.log(category) }}
                         <th>{{ index + 1 }}</th>
                         <td>{{ category.categoryname }} </td>
                         <td>
-                            <router-link :to="{ name: 'detailCategory', params: { id: category._id } }"><i
+                            <router-link :to="{ name: 'admin-detailcategorys', params: { id: category._id } }"><i
                                     class="bi bi-pencil-square"></i></router-link>
                         </td>
                     </tr>
@@ -46,7 +47,7 @@ export default {
     },
 
     mounted() {
-        // this.fetchgetNameCategorys()
+        this.fetchgetNameCategorys()
     },
 
     methods: {
@@ -54,31 +55,13 @@ export default {
             this.$router.push('/admin/addcategorys');
         },
 
-        // async fetchgetNameCategorys() {
-        //     try {
-        //         this.categorys = await CategoryService.getNameCategorys();
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // },
-
-        // async fetchgetNameCategorys() {
-        //     try {
-        //         const categories = await CategoryService.getNameCategorys();
-        //         this.categorys = categories; // Gán giá trị categories cho this.categorys
-        //     } catch (error) {
-        //         console.error(error);
-        //     }
-        // }
-
-        // async fetchgetNameCategorys() {
-        //     try {
-        //         const categories = await CategoryService.getNameCategorys();
-        //         this.categorys = categories; // Gán giá trị categories cho this.categorys
-        //     } catch (error) {
-        //         console.error("Error:", error.message);
-        //     }
-        // }
+        async fetchgetNameCategorys() {
+            try {
+                this.categorys = await CategoryService.getNameCategorys();
+            } catch (error) {
+                console.log(error);
+            }
+        },
 
     },
 

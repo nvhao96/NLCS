@@ -278,60 +278,60 @@ exports.findProductByCategory = async (req, res, next) => {
     }
 };
 
-exports.findProductByNotes = async (req, res, next) => {
-    let products = [];
-    try {
+// exports.findProductByNotes = async (req, res, next) => {
+//     let products = [];
+//     try {
 
 
 
-        const note = "Mới";
+//         const note = "Mới";
 
 
 
-        const productService = new ProductService(MongoDB.client);
+//         const productService = new ProductService(MongoDB.client);
 
-        const imageService = new ImageService(MongoDB.client);
+//         const imageService = new ImageService(MongoDB.client);
 
-        // Truy vấn CSDL để tìm kiếm sản phẩm theo danh mục
-
-
+//         // Truy vấn CSDL để tìm kiếm sản phẩm theo danh mục
 
 
-        products = await productService.findCategoryProduct({ notes: note });
 
 
-        if (!products) {
-            return res.send({ status: 404, message: "Không tìm thấy các sản phẩm tương tự" })
-        }
-
-        // Lặp qua mỗi san pham de lay hinh anh tuong ung thong qua id
+//         products = await productService.findCategoryProduct({ notes: note });
 
 
-        for (const product of products) {
-            const images = await imageService.findByMSHH(product._id.toString());
-            product.images = images;
-        }
+//         if (!products) {
+//             return res.send({ status: 404, message: "Không tìm thấy các sản phẩm tương tự" })
+//         }
+
+//         // Lặp qua mỗi san pham de lay hinh anh tuong ung thong qua id
 
 
-        // Tao doi tuong gom thong tin va hinh anh
-        const response = {
-            products
-        };
-
-        console.log("kq", products);
+//         for (const product of products) {
+//             const images = await imageService.findByMSHH(product._id.toString());
+//             product.images = images;
+//         }
 
 
-        return res.send(products);
-    } catch (error) {
-        return next(
-            new ApiError(
-                500,
-                `Lỗi khi lấy sản phẩm`
-            )
-        );
+//         // Tao doi tuong gom thong tin va hinh anh
+//         const response = {
+//             products
+//         };
 
-    }
-};
+//         console.log("kq", products);
+
+
+//         return res.send(products);
+//     } catch (error) {
+//         return next(
+//             new ApiError(
+//                 500,
+//                 `Lỗi khi lấy sản phẩm`
+//             )
+//         );
+
+//     }
+// };
 
 
 exports.searchProduct = [upload.none(), async (req, res, next) => {

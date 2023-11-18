@@ -58,11 +58,11 @@ const home = [
             //     component: () => import('../components/Contact.vue')
             // },
 
-            // {
-            //     path: 'search',
-            //     name: 'Search',
-            //     component: () => import('../components/Search.vue')
-            // },
+            {
+                path: 'search',
+                name: 'Search',
+                component: () => import('../components/Search.vue')
+            },
         ]
     },
 
@@ -77,11 +77,6 @@ const home = [
         name: 'Register',
         component: () => import('../components/Register.vue')
     },
-
-
-
-
-
 
 
     // neu khong dung duong dan da dinh nghia

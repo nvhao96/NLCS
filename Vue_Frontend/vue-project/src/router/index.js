@@ -21,10 +21,10 @@ const router = createRouter({
 });
 
 
+
 router.beforeEach((to, from, next) => {
 
     const isAdminRoute = to.matched.some(route => route.meta && route.meta.requiresAdmin);
-    console.log(isAdminRoute);
     const role = localStorage.getItem('role');
     if (isAdminRoute) {
 
@@ -73,35 +73,3 @@ router.beforeEach((to, from, next) => {
 export default router;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// import manage from "@/view/admin/manage.vue";
-// import login from "@/view/client/login.vue";
-//  = [
-//     {
-//         path: "/manageshop",
-//         name: "Manage",
-//         component: manage,
-//     },
-
-//     // {
-//     //     path: "/login",
-//     //     name: "Login",
-//     //     component: login,
-//     // },
-// ];
-// const router = createRouter({
-//     history: createWebHistory(import.meta.env.BASE_URL),
-//     routes,
-// });
-// export default router;

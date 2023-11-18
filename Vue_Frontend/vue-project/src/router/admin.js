@@ -36,7 +36,7 @@ const admin = [
             {
                 path: "detailcategorys",
                 name: "admin-detailcategorys",
-                component: () => import("../pages/admin/categorys/detailcategorys.vue")
+                component: () => import("../pages/admin/categorys/detailcategorys.vue"),
             },
 
             {

@@ -10,20 +10,25 @@ exports.register = async (req, res, next) => {
     const userService = new UserService(MongoDB.client);
     const emailExits = await userService.findByEmail(req.body.email);
     if (emailExits) {
-        return next(new ApiError(400, "Email đã tồn tại!"));
+        return res.status(400).send({ message: "Email đã tồn tại" });
+
     }
 
     try {
 
         const document = await userService.create(req.body);
 
-        return res.status(200).send({ message: "Dang ki thanh cong" })
+        return res.status(200).send({ message: "Đăng kí thành công" })
 
     } catch (error) {
         return next(
             new ApiError(500, "Đã xảy ra lỗi trong quá trình đăng ký tài khoản")
         )
     }
+
+
+
+
 
 };
 

@@ -54,7 +54,7 @@
                         <td class="d-flex">
                             <button v-if="product._id" @click="deleteProduct(product._id)" class="btn btn-danger"><i
                                     class="bi bi-trash3-fill"></i></button>
-                            <router-link :to="{ name: 'updateProduct', params: { id: product._id } }">
+                            <router-link :to="{ name: 'admin-updateproduct', params: { id: product._id } }">
                                 <button class="btn btn-warning"><i class="bi bi-pencil-square"></i></button>
                             </router-link>
 
@@ -68,7 +68,6 @@
 
 <script>
 import ProductService from '@/services/product.service';
-import axios from 'axios';
 export default {
     name: 'admin-products',
     data() {
@@ -81,14 +80,12 @@ export default {
         };
     },
 
-    // mounted() {
-    //     this.fetchgetAllProducts();
-
-    // },
-
     mounted() {
-        // this.searchProducts();
+        this.fetchgetAllProducts();
+
     },
+
+
 
     methods: {
         addProduct() {
@@ -96,8 +93,13 @@ export default {
         },
 
 
-
-
+        async fetchgetAllProducts() {
+            try {
+                this.products = await ProductService.getAllProducts();
+            } catch (error) {
+                console.log(error);
+            }
+        },
 
         async deleteProduct(productId) {
             try {

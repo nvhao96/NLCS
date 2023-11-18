@@ -157,7 +157,7 @@ export default {
 }
 
 .customer-info-container .btn {
-    background-color: #4CAF50;
+    background-color: #326e51;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -170,7 +170,7 @@ export default {
 }
 
 .customer-info-container .btn:hover {
-    background-color: #45a049;
+    background-color: #326e51;
 }
 
 .order {

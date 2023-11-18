@@ -1,16 +1,16 @@
-import createApiClient from "./api.services";
+// import createApiClient from "./api.services";
 
-class NoteService {
-    constructor(baseUrl = "/api/notes") {
-        this.api = createApiClient(baseUrl);
-    }
-
-
-    async findProductByNotes() {
-        return (await this.api.get('/')).data;
-    }
+// class NoteService {
+//     constructor(baseUrl = "/api/notes") {
+//         this.api = createApiClient(baseUrl);
+//     }
 
 
-}
+//     async findProductByNotes() {
+//         return (await this.api.get('/')).data;
+//     }
 
-export default new NoteService();
+
+// }
+
+// export default new NoteService();

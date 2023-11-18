@@ -6,6 +6,7 @@
         <table class="table table-hover table-bordered text-center">
             <thead class="dark">
                 <tr>
+                    <th></th>
                     <th>Hình Ảnh</th>
                     <th>Tên</th>
                     <th>Loại</th>
@@ -17,32 +18,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in products" :key="product._id">
+                <tr v-for="(product, index) in products" :key="product._id">
+                    <td>{{ index + 1 }}</td>
                     <td>
-                        <img :key="image" :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
-                            class="product-image">
+                        <img :key="image" :src="`http://localhost:3000/images/${product.images}`" class="product-image">
                     </td>
                     <td>{{ product.productname }}</td>
                     <td>{{ product.category }}</td>
-                    <td>{{ product.price }}</td>
+                    <td>{{ product.price.replace(/\s/g, '.') }}&#8363;</td>
                     <td>{{ product.describe }}</td>
                     <td>{{ product.Quantity }}</td>
                     <td>{{ product.notes }}</td>
                     <td class="d-flex">
-                        <!-- <button v-if="product._id" @click="deleteProduct(product._id)" class="btn btn-danger">Xóa</button> -->
                         <button v-if="product._id" @click="deleteProduct(product._id)" class="btn btn-danger"><i
                                 class="bi bi-trash3-fill"></i></button>
-                        <router-link :to="{ name: 'updateProduct', params: { id: product._id } }">
+                        <router-link :to="{ name: 'admin-updateproduct', params: { id: product._id } }">
                             <button class="btn btn-warning"><i class="bi bi-pencil-square"></i></button>
                         </router-link>
 
                     </td>
-                    <!-- <td><button v-if="product._id" @click="deleteProduct(product._id)" class="btn btn-danger">Xóa</button>
-                        <router-link :to="{ name: 'updateProduct', params: { id: product._id } }">
-                            <button class="btn btn-warning">Cập nhật</button>
-                        </router-link>
 
-                    </td> -->
                 </tr>
             </tbody>
         </table>
@@ -70,8 +65,6 @@ export default {
         async fetchfindProduct() {
             try {
                 const categoryId = this.$route.params.id;
-                // this.categoryname = this.$route.params.category;
-                // console.log("this.$route.params.category");
                 console.log("idmaykahch", categoryId);
                 // Gửi categoryId đến máy chủ để lấy danh sách sản phẩm tương ứng
 

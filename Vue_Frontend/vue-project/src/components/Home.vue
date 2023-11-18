@@ -56,86 +56,23 @@
     </div>
 
 
-    <div class="container  ">
-        <h3 class="text-center title-category mt-5">SẢN PHẨM <span class="title">MỚI</span></h3>
-        <div class="row">
-            <div class="col-md-3" v-for="product in products" :key="product.id">
-                <div class="card card-noibat mt-3" @click="viewProduct(product)">
-                    <div class="card-image card-img">
-                        <img :src="`http://localhost:3000/images/${product.images}`" :alt="productname"
-                            class="product-image text-center">
-                    </div>
-                    <div class="card-content">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="container">
-
-        <div class="row text-center content-2">
-            <h3 class="text-center title-category">GÓC CẢM HỨNG<span class="title"></span></h3>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <img src="/img/content.png" class="img-fuild image-home-2">
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <img src="/img/home-3.png" class="img-fuild image-home-2">
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-    <div class="container">
-        <h3 class="text-center title-category">TẤT CẢ SẢN PHẨM <span class="title"></span></h3>
+        <h3 class="text-center title-category mt-5">MỘT SỐ SẢN PHẨM <span class="title"></span></h3>
         <div class="row">
             <div class=" list">
-
                 <router-link :to="{ name: 'Product' }" @click="scrollToTop">
                     <p class="text-footer">Xem tất cả sản phẩm</p>
                 </router-link>
-
             </div>
-
         </div>
         <div class="row">
             <div class="col-md-3" v-for="item in items" :key="item.id">
                 <div class="card card-noibat mt-3" @click="viewProduct(item)">
                     <div class="card-image card-img">
-                        <img :src="`http://localhost:3000/images/${item.images}`" :alt="productname"
-                            class="product-image text-center">
+                        <img :src="`http://localhost:3000/images/${item.images}`" class="product-image text-center">
                     </div>
                     <div class="card-content">
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row image-home">
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="/img/hinhanh.png" class="card-img-top" alt="...">
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="/img/tủ.png" class="card-img-top" alt="...">
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="/img/mau-tron.png" class="card-img-top" alt="...">
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                    <img src="/img/home-2.png" class="card-img-top" alt="...">
                 </div>
             </div>
         </div>
@@ -146,7 +83,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="section-header text-center pb-5">
+                    <div class="section-header text-center pb-5 mt-5">
                         <h3><span class="title">DỊCH VỤ </span>CỦA CHÚNG TÔI</h3>
                     </div>
                 </div>
@@ -194,7 +131,7 @@
 </template>
 
 <script>
-import NoteService from '@/services/notes.service';
+// import NoteService from '@/services/notes.service';
 import ProductService from '@/services/product.service';
 
 export default {
@@ -209,9 +146,10 @@ export default {
     },
 
     mounted() {
-        this.findProductByNotes();
+        // this.findProductByNotes();
 
         this.getAllProduct();
+
     },
 
 
@@ -219,22 +157,22 @@ export default {
         async getAllProduct() {
             try {
                 const result = await ProductService.getAllProducts();
-                this.items = this.getRandomElements(result, 4);
+                this.items = this.getRandomElements(result, 8);
 
             } catch (error) {
                 console.error(error);
             }
         },
 
-        async findProductByNotes() {
-            try {
-                const response = await NoteService.findProductByNotes(); // Thay đổi đường dẫn API tùy thuộc vào cấu trúc của ứng dụng của bạn
+        // async findProductByNotes() {
+        //     try {
+        //         const response = await NoteService.findProductByNotes(); // Thay đổi đường dẫn API tùy thuộc vào cấu trúc của ứng dụng của bạn
 
-                this.products = this.getRandomElements(response, 4);
-            } catch (error) {
-                console.error(error);
-            }
-        },
+        //         this.products = this.getRandomElements(response, 4);
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+        // },
 
         getRandomElements(array, n) {
             const shuffled = array.slice();
@@ -256,18 +194,20 @@ export default {
             this.$router.push({ name: 'DetailProduct', params: { id: product._id } });
         },
 
-        methods: {
-            scrollToTop() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+
+        scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
-
-
 };
 </script>
 
 <style scoped>
+p .text-footer:hover {
+    text-decoration: #FF8E4D;
+
+}
+
 .card {
     width: 250px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -349,7 +289,9 @@ export default {
 }
 
 
-/* card-noibat */
+.text-footer {
+    color: #FF8E4D;
+}
 
 
 .card-noibat {
@@ -379,10 +321,14 @@ export default {
 }
 
 .card-img img {
-    width: 100%;
-    height: 100%;
+    width: 60%;
+    height: 98%;
     object-fit: cover;
     transition: transform 0.3s ease;
+    position: absolute;
+    justify-items: center;
+    left: 20%;
+    top: 4px;
 }
 
 .card-img:hover img {
@@ -438,6 +384,7 @@ h3 {
 
 .noibat {
     background-color: #FF8E4D;
+    border-radius: 20px;
 }
 
 .append {

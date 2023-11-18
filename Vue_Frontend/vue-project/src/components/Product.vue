@@ -32,8 +32,7 @@
 
                 <div class="row">
                     <div class="card col-lg-3 col-md-6 col-sm-12" v-for="product in products" :key="product._id">
-
-                        <img :key="image" :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
+                        <img :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
                             class="product-image">
                         <div class="product card-body text-center">
                             <p class="card-name">{{ product.productname }}</p>
@@ -115,7 +114,7 @@ export default {
 
         async getProduct(id) {
             try {
-                console.log("idmaykahch", id);
+                console.log("idmaykhach", id);
                 // Gửi categoryId đến máy chủ để lấy danh sách sản phẩm tương ứng
 
                 this.products = await CategoryService.findProduct(id);
@@ -226,6 +225,7 @@ export default {
 .product-image {
     width: 250px;
     height: 250px;
+    margin-top: 10px;
 }
 
 .item {
@@ -233,13 +233,14 @@ export default {
     font-size: 20px;
     color: white;
     text-align: center;
-    background-color: orange;
-
-
-
-
+    background-color: #FF8E4D;
 }
 
+h5 {
+    font-size: 1.25rem;
+    padding: 10px;
+    text-align: center;
+}
 
 .ul {
     list-style-type: none;
@@ -261,21 +262,20 @@ li p {
 li p:hover {
     /* background-color: #db7093; */
     font-weight: bold;
-    color: #04AA6D;
+    color: #326e51;
 }
 
 li p::after {
     content: '';
     width: 0;
     height: 3px;
-    background-color: #04AA6D;
-    color: #04AA6D;
+    background-color: #326e51;
     margin: auto;
     display: block;
 }
 
 .active-category {
-    background-color: #04AA6D;
+    background-color: #326e51;
     color: white;
 }
 
@@ -284,6 +284,8 @@ li p::after {
     border-radius: 16px;
     overflow: hidden;
     position: relative;
+    height: 390px;
+
 }
 
 .icon-hover {
@@ -299,12 +301,12 @@ li p::after {
 
 .icon-eye,
 .icon-cart {
-    background-color: #ff0000;
+    background-color: #FF8E4D;
     color: white;
     font-size: 16px;
     /* padding: 16px 32px; */
-    padding: 4px 15px;
-    margin-left: 5px;
+    padding: 4px 10px;
+    margin-left: 10px;
     border-radius: 50%;
     cursor: pointer;
 
@@ -329,15 +331,27 @@ li p::after {
 }
 
 .card-price {
-    color: red;
+    color: #FF8E4D;
 }
 
 .product {
-    margin: 50px 0;
+    margin: 20px 0;
 }
 
 .sort {
     text-align: right;
     margin-top: 30px;
+}
+
+option {
+    background-color: #eff1f0;
+    color: #FF8E4D;
+}
+
+select {
+    word-wrap: normal;
+    padding: 5px 0;
+    border-radius: 45px;
+    font-size: 20px;
 }
 </style>

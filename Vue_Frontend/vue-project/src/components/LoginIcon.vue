@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="dropdown log-res" v-if="!storedValue">
             <div class="d-flex align-items-center">
                 <div class="d-flex mr-2 d-none d-lg-block login-right">

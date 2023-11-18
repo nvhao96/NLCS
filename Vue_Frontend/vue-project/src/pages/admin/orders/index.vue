@@ -109,7 +109,7 @@
 
 <script>
 import OrderService from '@/services/order.service';
-// import moment from "moment";
+import moment from "moment";
 
 export default {
     name: 'admin-orders',

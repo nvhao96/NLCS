@@ -5,16 +5,6 @@
                 <div class="container-fluid">
                     <nav class="navbar navbar-expand-lg">
                         <div class="container" id="navbarNav1">
-
-                            <!-- <ul class="navbar-nav mr-auto">
-                                <li class="nav-item">
-                                    <div class="d-flex">
-                                        <i class="bi bi-telephone-inbound icon-phone"></i>
-                                        <h1 class="navbar-brand text-white hot-line">Hotline 1900 000</h1>
-                                    </div>
-                                </li>
-                            </ul> -->
-
                             <ul class="navbar-nav justify-items-sm-start">
                                 <div class="logo">
                                     <router-link to="/"><img src="/img/logo.png" class="img-thumbnail" width="42"
@@ -28,8 +18,6 @@
                                     <LoginIcon></LoginIcon>
                                 </li>
                                 <li>
-
-
                                     <div class="d-flex search">
                                         <button v-if="storedValue" class="icon-cart btn btn-outline position-relative"
                                             type="submit" @click="goToCart">
@@ -48,11 +36,8 @@
                                             </span>
                                         </button>
                                     </div>
-
                                 </li>
-
                             </ul>
-
                         </div>
                     </nav>
 
@@ -69,60 +54,43 @@
                         </div>
                         <div class="offcanvas-body">
                             <ul class="navbar-nav justify-content-center flex-grow-1 pe-3 ">
-                                <li class="nav-item active">
-                                    <router-link to="/" class="nav-link dropdown-item text-white">TRANG
+                                <li class="nav-item ">
+                                    <router-link to="/" class="nav-link dropdown-item text-white active">TRANG
                                         CHỦ</router-link>
                                 </li>
 
                                 <li class="nav-item ">
-                                    <router-link to="/product" class="nav-link dropdown-item text-white">SẢN
+                                    <router-link to="/product" class="nav-link dropdown-item text-white active">SẢN
                                         PHẨM</router-link>
                                 </li>
 
-                                <li class="nav-item">
-                                    <router-link to="/about" class="nav-link dropdown-item text-white">GIỚI
+                                <li class="nav-item ">
+                                    <router-link to="/about" class="nav-link dropdown-item text-white active">GIỚI
                                         THIỆU</router-link>
                                 </li>
 
-                                <li class="nav-item">
-                                    <router-link to="/contact" class="nav-link dropdown-item text-white">LIÊN
+                                <li class="nav-item ">
+                                    <router-link to="/contact" class="nav-link dropdown-item text-white active">LIÊN
                                         HỆ</router-link>
                                 </li>
                             </ul>
 
                             <div class="d-flex">
                                 <div class="d-flex search">
-
                                     <form class="d-flex" role="search">
                                         <input class="form-control" type="text" v-model="searchProduct"
-                                            placeholder="Tìm sản phẩm" aria-label="Search">
+                                            placeholder="Tìm sản phẩm..." aria-label="Search">
                                         <button @click.prevent="searchProducts"
                                             class="btn btn-outline-success text-white icon-search" type="submit"><i
                                                 class="bi bi-search"></i></button>
                                     </form>
                                 </div>
                             </div>
-                            <!-- 
-                            <div class="d-lg-none">
-                                <div class="text-white">
-                                    <router-link class="nav-link " to="/login">Đăng nhập / </router-link>
-                                </div>
-
-                                <div class="nav-item">
-                                    <router-link class="nav-link" to="/register">Đăng Ký</router-link>
-                                </div>
-
-                            </div> -->
-
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </nav>
-
-
     </header>
 </template>
 
@@ -146,8 +114,6 @@ export default {
         const router = useRouter();
 
         const searchProduct = ref(''); // Biến reactive để lưu trữ giá trị nhập liệu tìm kiếm
-
-
 
         const userId = localStorage.getItem('userId');
         const storedValue = ref(localStorage.getItem('isLoggedIn') === 'true');
@@ -196,14 +162,8 @@ export default {
         onMounted(() => {
             // Lấy trạng thái đăng nhập từ local storage khi component được mounted
             storedValue.value = localStorage.getItem('isLoggedIn') === 'true';
-
-
             fetchgetNameCategorys();
-
             getCart();
-
-
-
 
 
         });
@@ -279,6 +239,10 @@ export default {
     background-color: #326e51;
     top: 35px;
 
+}
+
+.active:hover {
+    color: #f38619 !important;
 }
 
 .logo-name {
