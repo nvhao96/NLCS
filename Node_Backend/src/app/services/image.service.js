@@ -8,7 +8,6 @@ class ImageService {
     }
 
     extractImageData(payload) {
-
         const image = {
             TenHinh: payload.TenHinh,
             MSHH: payload.MSHH

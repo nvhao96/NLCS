@@ -10,6 +10,7 @@ class CartService {
     }
 
     async getCart(id) {
+        console.log("check id", id);
         return (await this.api.get(`/${id}`)).data;
     }
 

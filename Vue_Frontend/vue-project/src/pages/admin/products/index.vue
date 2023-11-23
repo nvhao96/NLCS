@@ -42,8 +42,8 @@
                     <tr v-for="(product, index) in products" :key="product._id">
                         <td>{{ index + 1 }}</td>
                         <td>
-                            <img :key="image" :src="`http://localhost:3000/images/${product.images}`"
-                                :alt="product.productname" class="product-image">
+                            <img :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
+                                class="product-image">
                         </td>
                         <td>{{ product.productname }}</td>
                         <td>{{ product.category }}</td>
@@ -114,21 +114,18 @@ export default {
             }
         },
 
-        // async searchProducts(event) {
+        async searchProducts(event) {
 
 
-        //     try {
-        //         const response = await ProductService.searchProduct({ searchProduct: this.searchQuery });
-        //         this.products = response;
-        //         this.searchProducts();
-        //     } catch (error) {
-        //         console.error(error);
-        //     }
+            try {
+                const response = await ProductService.searchProduct({ searchProduct: this.searchQuery });
+                this.products = response;
+                this.searchProducts();
+            } catch (error) {
+                console.error(error);
+            }
 
-        // },
-
-
-
+        },
 
     }
 }

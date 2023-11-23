@@ -26,10 +26,13 @@ router.beforeEach((to, from, next) => {
 
     const isAdminRoute = to.matched.some(route => route.meta && route.meta.requiresAdmin);
     const role = localStorage.getItem('role');
+    console.log(role);
     if (isAdminRoute) {
 
         // const role = localStorage.getItem('role');
         const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
+        console.log(isAdminLoggedIn);
+
 
         if (isAdminLoggedIn === null) {
             // Chuyển hướng đến trang /admin/login nếu không có trường role trong localStorage

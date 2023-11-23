@@ -11,7 +11,7 @@
                 </div>
 
                 <form class="justity-content-center align-items-center" enctype="multipart/form-data"
-                    @submit="updateProduct($event, productId)">
+                    @submit.prevent="updateProduct($event, productId)">
                     <div class="mb-3 form-group">
                         <label for="exampleFormControlSelect1" class="title-product">Danh Mục:</label>
                         <select class="form-select" id="exampleFormControlSelect1" v-model="category">
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <button type="submit" class=" btn save">Cập nhật</button>
-                    <router-link to="/admin/products"><button class="cancel btn">Hủy</button></router-link>
+                    <router-link to="/admin/admin-products"><button class="cancel btn">Hủy</button></router-link>
                 </form>
             </div>
 
@@ -77,7 +77,7 @@
 import axios from 'axios';
 import ProductService from '@/services/product.service';
 import CategoryService from '@/services/category.service';
-
+import Swal from 'sweetalert2';
 export default {
 
     name: 'admin-updateproduct',
@@ -111,6 +111,7 @@ export default {
 
     created() {
         this.productId = this.$route.params.id;
+        console.log(this.$route);
         console.log("productId", this.productId);
 
 
@@ -157,6 +158,7 @@ export default {
                     if (response.status === 200) {
                         console.log("response", response);
                         alert("Cập nhật thành công");
+
 
                         this.$router.push('/admin/products');
                     } else {

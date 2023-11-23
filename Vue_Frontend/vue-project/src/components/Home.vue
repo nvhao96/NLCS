@@ -157,7 +157,7 @@ export default {
         async getAllProduct() {
             try {
                 const result = await ProductService.getAllProducts();
-                this.items = this.getRandomElements(result, 8);
+                this.items = this.getRandomElements(result, 12);
 
             } catch (error) {
                 console.error(error);

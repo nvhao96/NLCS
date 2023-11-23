@@ -67,7 +67,7 @@
         <div class="container">
             <div class="row about-content-three">
                 <div>
-                    <h3>Một số hình ảnh về của hàng</h3>
+                    <h3>Một số hình ảnh về cửa hàng</h3>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <img src="/img/about4.jpg" class="img-fluid">

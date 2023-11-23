@@ -10,8 +10,6 @@ const upload = require('./multer');
 exports.createProduct = [upload.single('imageURL'), async (req, res, next) => {
 
     try {
-
-
         if (req.fileValidationError) {
             // xu li loi multer
             return next(new ApiError(400, "Loi khi tai hinh anh len"));
@@ -151,9 +149,9 @@ exports.updateProduct = [upload.single('imageURL'), async (req, res, next) => {
         const productService = new ProductService(MongoDB.client);
 
         const document = await productService.update(req.params.id, { productname, category, price, Quantity, describe, notes });
-
-        if (!document || !document.value) {
-            return next(new ApiError(404, "Không tìm thấy sản phẩm cần cập nhật"));
+        if (!document) {
+            console.log('hihi');
+            return next(new ApiError, "Không tìm thấy sản phẩm cần cập nhật");
         }
         else {
             // Cập nhật hình ảnh nếu có hình ảnh được tải lên
@@ -178,7 +176,9 @@ exports.updateProduct = [upload.single('imageURL'), async (req, res, next) => {
             }
 
         }
+
     } catch (error) {
+        console.log(error);
         return next(
             new ApiError(
                 500,
@@ -278,60 +278,7 @@ exports.findProductByCategory = async (req, res, next) => {
     }
 };
 
-// exports.findProductByNotes = async (req, res, next) => {
-//     let products = [];
-//     try {
 
-
-
-//         const note = "Mới";
-
-
-
-//         const productService = new ProductService(MongoDB.client);
-
-//         const imageService = new ImageService(MongoDB.client);
-
-//         // Truy vấn CSDL để tìm kiếm sản phẩm theo danh mục
-
-
-
-
-//         products = await productService.findCategoryProduct({ notes: note });
-
-
-//         if (!products) {
-//             return res.send({ status: 404, message: "Không tìm thấy các sản phẩm tương tự" })
-//         }
-
-//         // Lặp qua mỗi san pham de lay hinh anh tuong ung thong qua id
-
-
-//         for (const product of products) {
-//             const images = await imageService.findByMSHH(product._id.toString());
-//             product.images = images;
-//         }
-
-
-//         // Tao doi tuong gom thong tin va hinh anh
-//         const response = {
-//             products
-//         };
-
-//         console.log("kq", products);
-
-
-//         return res.send(products);
-//     } catch (error) {
-//         return next(
-//             new ApiError(
-//                 500,
-//                 `Lỗi khi lấy sản phẩm`
-//             )
-//         );
-
-//     }
-// };
 
 
 exports.searchProduct = [upload.none(), async (req, res, next) => {

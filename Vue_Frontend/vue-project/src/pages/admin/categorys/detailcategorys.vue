@@ -25,14 +25,14 @@
                     </td>
                     <td>{{ product.productname }}</td>
                     <td>{{ product.category }}</td>
-                    <td>{{ product.price.replace(/\s/g, '.') }}&#8363;</td>
+                    <td>{{ product.price }}&#8363;</td>
                     <td>{{ product.describe }}</td>
                     <td>{{ product.Quantity }}</td>
                     <td>{{ product.notes }}</td>
                     <td class="d-flex">
                         <button v-if="product._id" @click="deleteProduct(product._id)" class="btn btn-danger"><i
                                 class="bi bi-trash3-fill"></i></button>
-                        <router-link :to="{ name: 'admin-updateproduct', params: { id: product._id } }">
+                        <router-link :to="`/admin/updateproduct/${product._id}`">
                             <button class="btn btn-warning"><i class="bi bi-pencil-square"></i></button>
                         </router-link>
 

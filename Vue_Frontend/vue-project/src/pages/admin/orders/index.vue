@@ -110,6 +110,7 @@
 <script>
 import OrderService from '@/services/order.service';
 import moment from "moment";
+import Swal from 'sweetalert2';
 
 export default {
     name: 'admin-orders',
@@ -154,7 +155,13 @@ export default {
             const response = await OrderService.updateOrder(orderId, data);
 
             if (response.status === 200) {
-                alert('Cập nhật đơn hàng thành công');
+                // alert('Cập nhật đơn hàng thành công');
+                Swal.fire(
+                    "",
+                    "Xử lý đơn hàng thành công!",
+                    "success"
+                );
+
                 this.getOrders();
             }
         }

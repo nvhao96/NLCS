@@ -46,7 +46,6 @@ exports.addToCart = [upload.none(), async (req, res, next) => {
 }];
 
 exports.getCart = async (req, res, next) => {
-
     try {
         let documents = [];
         const userId = req.params.userId;
@@ -76,13 +75,13 @@ exports.getCart = async (req, res, next) => {
                     quantity: item.quantity
                 });
             }
-
             documents = cartItems;
             // console.log("document", documents);
 
             return res.send(documents);
         }
     } catch (error) {
+        console.log(error)
         return next(
             new ApiError(
                 500,

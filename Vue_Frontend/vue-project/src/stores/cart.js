@@ -32,7 +32,7 @@ export const useCartStore = defineStore('cart', {
     getters: {
 
         getTotalQuantity(state) {
-            return state.totalQuantity;
+            return state.selectedItems.length || 0;
         }
 
     },

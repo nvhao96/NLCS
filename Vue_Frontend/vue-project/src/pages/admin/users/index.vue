@@ -11,6 +11,7 @@
                 <table class="table table-hover table-bordered customer-table">
                     <thead class="">
                         <tr>
+                            <th></th>
                             <th>Tên khách hàng</th>
                             <th>Địa chỉ</th>
                             <th>Email</th>
@@ -18,7 +19,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="user in users" :key="user.id">
+                        <tr v-for="(user, index) in users" :key="user.id">
+                            <td>{{ index + 1 }}</td>
                             <td>{{ user.fullname }}</td>
                             <td>{{ user.address }}</td>
                             <td>{{ user.email }}</td>
@@ -30,24 +32,28 @@
             <div class="col-lg-6 col-md-6 col-sm-6 admin">
                 <!-- <div class="d-flex text-center"> -->
                 <h5>Nhân Viên</h5>
-                <h6><router-link to="/admin/adminregister">Tạo tài khoản cho nhân viên</router-link></h6>
+                <h6><router-link to="/admin/register">Tạo tài khoản cho nhân viên</router-link></h6>
                 <!-- </div> -->
 
                 <table class="table table-hover table-bordered">
                     <thead class="">
                         <tr>
-                            <th>Tên khách hàng</th>
+                            <th></th>
+                            <th>Tên nhân viên</th>
                             <th>Địa chỉ</th>
                             <th>Email</th>
                             <th>Số điện thoại</th>
+                            <th>Chức vụ</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="user in users" :key="user.id">
-                            <td>{{ user.fullname }}</td>
-                            <td>{{ user.address }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.phone }}</td>
+                        <tr v-for="(admin, index) in admins" :key="admin.id">
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ admin.adminname }}</td>
+                            <td>{{ admin.address }}</td>
+                            <td>{{ admin.email }}</td>
+                            <td>{{ admin.phone }}</td>
+                            <td>{{ admin.chucvu }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -61,15 +67,17 @@
 import UserService from '@/services/user.service';
 
 export default {
-    name: 'admin-users',
+    name: 'Users',
     data() {
         return {
             users: [],
+            admins: [],
         };
     },
 
     mounted() {
         this.fetchgetAllUsers()
+        this.fetchgetAllAdmins()
     },
 
     methods: {
@@ -79,12 +87,21 @@ export default {
             } catch (error) {
                 console.error(error);
             }
+        },
+
+        async fetchgetAllAdmins() {
+            try {
+                this.admins = await UserService.getAllAdmins();
+            } catch (error) {
+                console.error(error);
+            }
         }
     }
 }
 </script>
 <style scoped>
-h3 {
+h3,
+h5 {
     text-align: center;
     font-weight: bold;
     /* margin-top: 20px; */

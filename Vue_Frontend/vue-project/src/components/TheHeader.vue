@@ -107,7 +107,10 @@ export default {
     components: { LoginIcon },
 
     setup() {
-        const totalQuantity = ref(0);
+
+        // const cartStore = useCartStore();
+        // const totalQuantity = computed(() => cartStore.getTotalQuantity);
+        const totalQuantity = ref(useCartStore().getTotalQuantity);
         const cartItems = ref([]);
         const category = '';
         const categories = ref([]);

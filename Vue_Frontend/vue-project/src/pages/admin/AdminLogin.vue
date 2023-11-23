@@ -118,7 +118,7 @@ export default {
                             Error.value = error.response.data.message;
                         }
                         else {
-                            Error.value = 'Lỗi không xác định. Vui lòng thử lại sau';
+                            Error.value = 'Đăng nhập không thành công, vui lòng nhập lại mật khẩu';
                         }
                         showError.value = true;
                     });
@@ -301,7 +301,7 @@ h6 {
 .error-message {
     color: red;
     margin-top: 30px;
-    margin-left: 350px;
+    margin-left: 420px;
     width: fit-content;
 }
 

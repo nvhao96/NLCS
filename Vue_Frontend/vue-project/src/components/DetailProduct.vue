@@ -4,7 +4,7 @@
             <h3>Chi tiết sản phẩm</h3>
             <div class="col-md-5 text-center">
                 <div class="card">
-                    <img :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
+                    <img v-bind:src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
                         class="product-image">
                 </div>
 

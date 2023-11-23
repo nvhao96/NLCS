@@ -1,3 +1,4 @@
+
 const admin = [
     {
         path: "/admin",
@@ -34,7 +35,7 @@ const admin = [
             },
 
             {
-                path: "detailcategorys",
+                path: "detailcategorys/:id",
                 name: "admin-detailcategorys",
                 component: () => import("../pages/admin/categorys/detailcategorys.vue"),
             },
@@ -50,7 +51,7 @@ const admin = [
                 component: () => import("../pages/admin/products/addproduct.vue")
             },
             {
-                path: "updateproduct",
+                path: "updateproduct/:id",
                 name: "admin-updateproduct",
                 component: () => import("../pages/admin/products/updateproduct.vue")
             },

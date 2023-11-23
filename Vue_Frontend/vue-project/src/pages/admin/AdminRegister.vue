@@ -2,7 +2,7 @@
     <div class="container" id="container">
         <div class="form-container sign-in">
             <form>
-                <h3 class="mt-3">Đăng Ký</h3>
+                <h3>Đăng Ký</h3>
                 <input class="input-field" v-model="adminname" type="text" placeholder="Họ tên">
 
                 <input class="input-field" v-model="email" type="email" placeholder="Email">
@@ -34,7 +34,8 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-right">
-                    <h1>Hello, Friend!</h1>
+                    <h1>Hasagi</h1>
+                    <h2>Admin</h2>
                 </div>
             </div>
         </div>
@@ -177,12 +178,12 @@ export default {
     overflow: hidden;
     width: 768px;
     max-width: 100%;
-    min-height: 480px;
+    min-height: 520px;
     margin-top: 50px;
 }
 
 .container button {
-    background-color: #04AA6D;
+    background-color: #326e51;
 
     color: #fff;
     font-size: 12px;
@@ -232,7 +233,7 @@ export default {
 .sign-in {
     left: 0;
     width: 50%;
-    z-index: 2;
+    z-index: 1;
 }
 
 
@@ -245,21 +246,24 @@ export default {
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
+    border-radius: 30px 0 0 30px;
     z-index: 1000;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .toggle {
 
-    height: 100%;
     background-image: url("/img/register.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
     color: #fff;
     position: relative;
-    left: -100%;
     height: 100%;
-    width: 200%;
+    width: 100%;
+    text-align: center;
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
+
 }
 
 /* hello */
@@ -279,8 +283,28 @@ export default {
 }
 
 .toggle-right {
+    height: 100%;
     right: 0;
     transform: translateX(0);
+}
+
+.toggle-panel h1 {
+    position: absolute;
+    top: 64px;
+    right: 105px;
+    color: #326e51
+}
+
+.toggle-panel h2 {
+    position: absolute;
+    top: 230px;
+    right: 90px;
+    width: 200px;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #888888;
+    color: #000;
+
 }
 
 h6 {
@@ -301,19 +325,19 @@ h6 {
 .error-message {
     color: red;
     margin-top: 30px;
-    margin-left: 350px;
+    margin-left: 440px;
     width: fit-content;
 }
 
 .comeback {
     margin-top: 8px;
+    width: 300px;
+    left: 230px;
+    text-align: center;
+    position: absolute;
 }
 
 .input-field:focus {
-    border: 2px solid #04AA6D;
-}
-
-h3 {
-    margin-bottom: 1rem;
+    border: 2px solid #326e51;
 }
 </style>
